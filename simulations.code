@@ -1,4 +1,35 @@
 
+#! /usr/bin/env Rscript
+---
+title: Figure1-Manuscript-Simulations-WBC traits facilitate the fine-mapping of the asthma17:37.2-38.8Mb locus.
+author: "Chief Ben-Eghan"
+date: "2/1/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# R Markdown
+Load the required packages
+```{r}
+library(dplyr)
+library(data.table)
+library(ggplot2)
+library(ggalluvial)
+library(alluvial)
+library(ggpubr)
+library(grid)
+library(reshape2)
+library(grid)
+library(devtools)
+source_gist("524eade46135f6348140")
+library(ggpmisc)
+library(cowplot)
+```
+
+```{r}
 ## convert file into long table 
 
 v1=fread("~/Desktop/my_random_regions_nonEUR_1e_4.txt")
@@ -70,3 +101,6 @@ plot1
 pdf("~/Desktop/simulations_data_folder/simplot2.pdf", 15,10)
 plot(plot1)
 dev.off()
+
+
+```
