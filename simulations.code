@@ -1,0 +1,72 @@
+
+## convert file into long table 
+
+v1=fread("~/Desktop/my_random_regions_nonEUR_1e_4.txt")
+df.v2<-pivot_longer(v1, cols = -c(1:5),
+names_to = c("Pheno","Population"), 
+names_sep = "_", 
+values_to = "gws_signals")
+
+
+
+### subset each population 
+
+df.EAS=subset(df.v2, df.v2$Population=="EAS")
+df.EUR=subset(df.v2, df.v2$Population=="EUR")
+df.HIS=subset(df.v2, df.v2$Population=="HIS")
+df.AFR=subset(df.v2, df.v2$Population=="AFR")
+
+
+
+
+
+## EUR 
+p.EUR=ggplot(df.EUR[which(df.EUR$gws_signals>0),], aes(gws_signals, fill=Pheno)) +geom_density(adjust=2, alpha=0.2)+xlim(0,82)+geom_vline(xintercept = 72, linetype="dashed", color="blue", alpha=0.8)+
+  geom_vline(xintercept = 12, linetype="dashed", color="red", alpha=0.8)+
+  geom_vline(xintercept = 79, linetype="dashed", color="pink", alpha=0.8)+
+  geom_vline(xintercept = 17, linetype="dashed", color="yellow", alpha=0.8)+geom_vline(xintercept = 17, linetype="dashed", color="pink", alpha=0.8)+geom_vline(xintercept = 24, linetype="dashed", color="pink", alpha=0.8)+ggtitle("EUR")
+
+
+
+
+##AFR
+p.AFR=ggplot(df.AFR[which(df.AFR$gws_signals>0),], aes(gws_signals, fill=Pheno)) +geom_density(adjust=2, alpha=0.2)+xlim(0,5)+geom_vline(xintercept = 3, linetype="dashed", color="blue", alpha=0.8)+
+  geom_vline(xintercept = 3, linetype="dashed", color="red", alpha=0.8)+
+  geom_vline(xintercept = 1, linetype="dashed", color="pink", alpha=0.8)+
+  geom_vline(xintercept = 2, linetype="dashed", color="yellow", alpha=0.8)+ggtitle("AFR")
+
+
+
+##HISPANIC
+p.HIS=ggplot(df.HIS[which(df.HIS$gws_signals>0),], aes(gws_signals, fill=Pheno)) +geom_density(adjust=2, alpha=0.2)+xlim(0,5)+geom_vline(xintercept = 1, linetype="dashed", color="blue", alpha=0.8)+
+  geom_vline(xintercept = 1, linetype="dashed", color="red", alpha=0.8)+
+  geom_vline(xintercept = 3, linetype="dashed", color="pink", alpha=0.8)+geom_vline(xintercept = 3, linetype="dashed", color="yellow", alpha=0.8)+ggtitle("HIS")
+
+
+
+
+## EAST ASIAN
+p.EAS=ggplot(df.EAS[which(df.EAS$gws_signals>0),], aes(gws_signals, fill=Pheno)) +geom_density(adjust=2, alpha=0.2)+xlim(0,30)+geom_vline(xintercept = 3, linetype="dashed", color="yellow", alpha=0.9)+
+  geom_vline(xintercept = 2, linetype="dashed", color="green", alpha=0.9)+
+  geom_vline(xintercept = 1, linetype="dashed", color="powderblue", alpha=0.9)+
+  geom_vline(xintercept = 22, linetype="dashed", color="blue", alpha=0.9)+geom_vline(xintercept = 25, linetype="dashed", color="pink", alpha=0.9)+ggtitle("EAS")
+
+
+## full plot 
+plot1=ggarrange(p.EUR, p.AFR,p.HIS, p.EAS,  common.legend = TRUE, legend="right")
+head(df.EUR)
+
+
+plot
+fwrite(df.EUR, "~/Desktop/simulations_data_folder/df.EUR.txt", sep="\t", row.names=F, quote=F)
+fwrite(df.EUR, "~/Desktop/simulations_data_folder/df.EAS.txt", sep="\t", row.names=F, quote=F)
+fwrite(df.EUR, "~/Desktop/simulations_data_folder/df.HIS.txt", sep="\t", row.names=F, quote=F)
+fwrite(df.AFR, "~/Desktop/simulations_data_folder/df.AFR.txt", sep="\t", row.names=F, quote=F)
+
+
+plot1
+
+
+pdf("~/Desktop/simulations_data_folder/simplot2.pdf", 15,10)
+plot(plot1)
+dev.off()
