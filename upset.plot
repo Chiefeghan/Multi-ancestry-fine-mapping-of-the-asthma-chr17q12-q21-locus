@@ -1,6 +1,34 @@
+#! /usr/bin/env Rscript
+---
+title: Figure-Manuscript- upset plot/overlap of 95% CS in EUR
+author: "Chief Ben-Eghan"
+date: "2/2/2022"
+output: html_document
+---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
-
+# R Markdown
+Load the required packages
+```{r}
+library(dplyr)
+library(data.table)
+library(ggplot2)
+library(ggalluvial)
+library(alluvial)
+library(ggpubr)
+library(grid)
+library(reshape2)
+library(grid)
+library(devtools)
+source_gist("524eade46135f6348140")
+library(ggpmisc)
+library(cowplot)
+library(susieR)
+library(UpSetR)
+```
 
 
 ```{r}
