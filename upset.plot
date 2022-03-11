@@ -39,9 +39,12 @@ data_wide4=fread("~/Desktop/data_wide4")
 
 
 pdf("~/Desktop/upsetplot1.pdf", 12,10)
-upset(data_wide4,sets =c("<18yrs", "<40yrs", "asthma(age+sex)","BASO#","BASO%","EOS#","EOS%", "LYM#","LYM%","MON#","MON%", "NEU#","NEU%","WBC#"),keep.order = TRUE,order.by = "freq",
-  query.legend = "bottom", nsets = 15, number.angles = 0, point.size = 2.5, line.size = 1,nintersects=50,text.scale = c(2, 1.5, 1.8, 1.5, 1.5, 1.3),
-  mainbar.y.label = "Overlapping variants in 95% CS", sets.x.label ="# of SNPs per Phenotype" ,mb.ratio = c(0.55, 0.45),
+upset(data_wide4,sets =c("<18yrs", "<40yrs", "asthma(age+sex)","BASO#","BASO%","EOS#","EOS%", "LYM#","LYM%","MON#","MON%", "NEU#","NEU%","WBC#"),
+      keep.order = TRUE,order.by = "freq",
+  query.legend = "bottom", nsets = 15, number.angles = 0, point.size = 2.5, line.size = 1,
+      nintersects=50,text.scale = c(2, 1.5, 1.8, 1.5, 1.5, 1.3),
+  mainbar.y.label = "Overlapping variants in 95% CS", sets.x.label ="# of SNPs per Phenotype" ,
+      mb.ratio = c(0.55, 0.45),
   queries = list(
   list(
     query = intersects,
