@@ -1,0 +1,79 @@
+
+
+```
+df1=fread("~/Desktop/upset.csv")
+
+##generate ranges for PIPs
+
+df1=mutate(df1, r1=ifelse(PP>=0.9, ">90%", "0"))
+df1=mutate(df1, r2=ifelse(PP>=0.7 & PP<=0.9, "70%-90%", "0"))
+df1=mutate(df1, r3=ifelse(PP>=0.5 & PP<=0.7, "50%-70%", "0"))
+df1=mutate(df1, r4=ifelse(PP>=0.3 & PP<=0.5, "30%-50%", "0"))
+df1=mutate(df1, r5=ifelse(PP>=0.1 & PP<=0.3, "10%-30%", "0"))
+df1=mutate(df1, r6=ifelse(PP<0.1, "<10%", "0"))
+df1[df1 == 0] <- NA
+df1=df1%>%mutate(Percentage=coalesce(r1, r2, r3, r4, r5, r6))
+
+##rename asthma groups 
+df1=mutate(df1, PHENO2=ifelse(df1$PHENO=="AST6", "<18yrs", df1$PHENO))
+df1=mutate(df1, PHENO2=ifelse(df1$PHENO=="AST8", "<40yrs", df1$PHENO2))
+df1=mutate(df1, PHENO2=ifelse(df1$PHENO=="AST_age_sex", "asthma(age+sex)", df1$PHENO2))
+
+
+## set order for PIP ranges 
+orderlistdf1=c("<10%","10%-30%", "30%-50%","50%-70%","70%-90%",">90%"  )
+df1$Percentage=factor(df1$Percentage, levels=orderlistdf1)
+
+###plot all PIPs for EUR phenotypes analysed 
+
+##obtain count for proportions
+totals <- df1 %>% count(Percentage, PHENO2)
+  
+  
+ full.pip.plot=df1 %>% count(Percentage, PHENO2)%>% ggplot(aes(PHENO2, n))+
+ geom_col(aes(fill=Percentage), position="fill")+
+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
+ coord_flip()+scale_fill_brewer(palette = "Set3")+
+ theme_bw()+guides(fill = guide_legend(reverse = TRUE))+
+ xlab("Phenotype")+ geom_text(aes(label=n, group=Percentage),size=3.5,position = position_fill(vjust=0.5),data<-totals)+
+ theme(axis.title.x=element_blank(),axis.text.x=element_blank(),axis.ticks.x=element_blank())+labs(fill = "PIP")+
+ theme(text = element_text(size = 15))
+ 
+ 
+pdf("~/Desktop/fullpip.pdf", 8,6)
+plot(full.pip.plot)
+dev.off()
+
+
+
+
+### exclude PIPs that are <10% and phenos with PIPs <10% BASO# 
+df1b=subset(df1, df1b$PHENO2!="BASO%")
+df1b=subset(df1b, df1b$Percentage!="<10%")
+orderlistdf2=c("10%-30%", "30%-50%","50%-70%","70%-90%",">90%")
+df1b$Percentage=factor(df1b$Percentage, levels=orderlistdf2)
+
+
+##Plot PIPs  > 10& 
+totals2 <- df1b %>% count(Percentage, PHENO2)
+pip.plot=df1b %>% count(Percentage, PHENO2)%>% ggplot(aes(PHENO2, n))+
+geom_col(aes(fill=Percentage), position="fill")+
+theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
+coord_flip()+scale_fill_brewer(palette = "Set3")+theme_bw()+
+guides(fill = guide_legend(reverse = TRUE))+xlab("Phenotype")+ 
+geom_text(aes(label=n, group=Percentage),size=3.5, 
+position = position_fill(vjust=0.5),data<-totals2)+
+theme(axis.title.x=element_blank(),axis.text.x=element_blank(),
+axis.ticks.x=element_blank())+
+theme(text = element_text(size = 20))+labs(fill = "PIP")#+theme(legend.position="top")
+  
+
+pdf("~/Desktop/pip.pdf", 8,6)
+plot(pip.plot)
+dev.off()
+
+
+```
+
+
+
