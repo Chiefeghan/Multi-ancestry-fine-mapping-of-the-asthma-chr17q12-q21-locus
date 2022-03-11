@@ -1,6 +1,35 @@
+#! /usr/bin/env Rscript
+---
+title: Figure-Manuscript- fine-mapping via SuSiE/PIPS.
+author: "Chief Ben-Eghan"
+date: "2/2/2022"
+output: html_document
+---
 
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 ```
+
+# R Markdown
+Load the required packages
+```{r}
+library(dplyr)
+library(data.table)
+library(ggplot2)
+library(ggalluvial)
+library(alluvial)
+library(ggpubr)
+library(grid)
+library(reshape2)
+library(grid)
+library(devtools)
+source_gist("524eade46135f6348140")
+library(ggpmisc)
+library(cowplot)
+library(susieR)
+```
+
+```{r}
 df1=fread("~/Desktop/upset.csv")
 
 ##generate ranges for PIPs
@@ -71,7 +100,6 @@ theme(text = element_text(size = 20))+labs(fill = "PIP")#+theme(legend.position=
 pdf("~/Desktop/pip.pdf", 8,6)
 plot(pip.plot)
 dev.off()
-
 
 ```
 
