@@ -1,1 +1,89 @@
-Generating 10,000 1.6 Mb overlapping regions  across autosomes 
+
+
+
+library(Homo.sapiens)
+
+
+```{r}
+seqlengths(TxDb.Hsapiens.UCSC.hg19.knownGene)[1:22]
+my_random_regions = data.frame(chr=sample(seqlevels(TxDb.Hsapiens.UCSC.hg19.knownGene)[1:22], 10000, replace=T))
+
+#View(my_random_regions) 
+## check count of snps in each chromosome
+#chr6 has 171115067
+
+##loop to generate the start of the regions
+my_random_regions$start = apply(my_random_regions, 1, function(x) { 
+         round(runif(1, 0, seqlengths(TxDb.Hsapiens.UCSC.hg19.knownGene)[x][[1]]), 0) })
+
+##loop to generate the end of the regions
+my_random_regions$end = my_random_regions$start + runif(10000, 1600000, 1600000)
+ my_random_regions.gr = makeGRangesFromDataFrame(my_random_regions)
+ 
+ #View(my_ranomd_regions.gr)
+ my_random_regions.gr=as.data.frame(my_random_regions.gr)
+ #View(my_random_regions.gr)
+ 
+ ## check the number of regions in chr6/10000
+ table(my_random_regions.gr$seqnames)
+ ##chr6 464 regions
+
+
+ 
+ 
+
+
+
+#### remove the HLA region 
+chr6 <- data.frame(c("chr6"), c(1), c(171115067))
+mask <- data.frame("chr6", c(29719561), c(32883508))###remove the HLA region
+chr6.noHLA=createRandomRegions(nregions=464, genome=chr6, mask=mask, non.overlapping=FALSE,length.mean=1600001, length.sd=0)
+chr6.noHLA=as.data.frame(chr6.noHLA)
+
+
+
+####exclude chr6 from the main df
+my_random_regions.gr=subset(my_random_regions.gr, my_random_regions.gr$seqnames!="chr6")
+### attach the new chr6 without HLA region
+## count of new regions in chr6.noHLA is equal to what was extracted 
+my_random_regions.gr=rbind(my_random_regions.gr, chr6.noHLA)
+
+
+
+#### generate empty columns for each population 
+##populate with count of gws variants in each population /Phenotype
+my_random_regions.gr['BASO_EUR'] <- NA
+my_random_regions.gr['EOS_EUR'] <- NA
+my_random_regions.gr['LYM_EUR'] <- NA
+my_random_regions.gr['MON_EUR'] <- NA
+my_random_regions.gr['NEU_EUR'] <- NA
+my_random_regions.gr['WBC_EUR'] <- NA
+
+
+my_random_regions.gr['BASO_EAS'] <- NA
+my_random_regions.gr['EOS_EAS'] <- NA
+my_random_regions.gr['LYM_EAS'] <- NA
+my_random_regions.gr['MON_EAS'] <- NA
+my_random_regions.gr['NEU_EAS'] <- NA
+my_random_regions.gr['WBC_EAS'] <- NA
+
+
+my_random_regions.gr['BASO_AFR'] <- NA
+my_random_regions.gr['EOS_AFR'] <- NA
+my_random_regions.gr['LYM_AFR'] <- NA
+my_random_regions.gr['MON_AFR'] <- NA
+my_random_regions.gr['NEU_AFR'] <- NA
+my_random_regions.gr['WBC_AFR'] <- NA
+
+
+my_random_regions.gr['BASO_HIS'] <- NA
+my_random_regions.gr['EOS_HIS'] <- NA
+my_random_regions.gr['LYM_HIS'] <- NA
+my_random_regions.gr['MON_HIS'] <- NA
+my_random_regions.gr['NEU_HIS'] <- NA
+my_random_regions.gr['WBC_HIS'] <- NA
+
+
+```
+
+
