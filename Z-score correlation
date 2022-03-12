@@ -1,0 +1,53 @@
+
+
+df.matrix=fread("~/Downloads/EUR.allcpassoc.txt")
+#fwrite(f_n, "~/Downloads/EUR.allcpassoc.txt", sep="\t", row.names=F, quote=F)
+df.matrix=subset(df.matrix, df.matrix$BP.x>=37281157)
+df.matrix=subset(df.matrix, df.matrix$BP.x<=38876409)
+
+
+#View(df.matrix)
+f_k=df.matrix[,c(1,3, 8,9, 14,15,20,21, 26,27, 32,33,38,39,44,45,50,51,56,57, 62,63, 68,69,74,75)]
+#View(f_k)
+
+f_k=f_k[,-c(25,26)]
+
+#######
+WBC_matrix=f_k[,c(4,6,8,10,12,14,16,18,20,22,24)]
+View(WBC_matrix)
+
+####
+
+wbc.mat=cor(WBC_matrix)
+corrplot(wbc.mat)
+
+colnames(wbc.mat) <- c("BASO#", "BASO%", "EOS#", "EOS%", "LYM#", "LYM%", "MONO#", "MONO%", "NEUT#", "NEUT%", "WBC#")
+rownames(wbc.mat) <- c("BASO#", "BASO%", "EOS#", "EOS%", "LYM#", "LYM%", "MONO#", "MONO%", "NEUT#", "NEUT%", "WBC#")
+#corrplot(wbc.mat, method="square", outline=T,order="hclust", tl.col="black", tl.srt=45, main="SW")
+pdf("~/Desktop/Zcorrelation_WBC_EUR.pdf", 12,10)
+corrplot(wbc.mat, method="square", outline=T, tl.col="black", tl.srt=45)
+dev.off()
+
+
+
+####Plot Asthma strata VS WBC Z score correlartion
+
+ast.mat<-df.matrix[,.(Z1, Z2, Z3, Z4, Z5, Z6, Z7,Z8,Z9,Z10,Z11,Z12,Z13,Z14,Z15)]
+#View(ast.mat)
+ast.mat2=ast.mat[,c(12:15, 1:11)]
+#View(ast.mat2)
+ast.mat2=cor(ast.mat2)
+
+colnames(ast.mat2) <- c("18-40yrs", ">40yrs", "<18yrs", "<40yrs", "BASO#", "BASO%", "EOS#", "EOS%", "LYM#", "LYM%", "MONO#", "MONO%", "NEUT#", "NEUT%", "WBC#")
+rownames(ast.mat2) <- c("18-40yrs", ">40yrs", "<18yrs", "<40yrs","BASO#", "BASO%", "EOS#", "EOS%", "LYM#", "LYM%", "MONO#", "MONO%", "NEUT#", "NEUT%", "WBC#")
+corrplot(ast.mat2, method="square", outline=T, tl.col="black", tl.srt=45)
+
+
+
+####### remove rows with wbc and columns ast
+ast.mat3=ast.mat2[c(1:4),-c(1:4)]
+
+
+pdf("~/Desktop/Zcorrelation_ast_WBC_EUR.pdf", 8,6)
+corrplot(ast.mat3, method="square", outline=T, tl.col="black", tl.srt=45)
+dev.off()
