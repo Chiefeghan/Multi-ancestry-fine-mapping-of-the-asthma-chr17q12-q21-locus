@@ -79,6 +79,4 @@ ast.mat3=ast.mat2[c(1:4),-c(1:4)]
 pdf("~/Desktop/Zcorrelation_ast_WBC_EUR.pdf", 8,6)
 corrplot(ast.mat3, method="square", outline=T, tl.col="black", tl.srt=45)
 dev.off()
-
-
 ```
