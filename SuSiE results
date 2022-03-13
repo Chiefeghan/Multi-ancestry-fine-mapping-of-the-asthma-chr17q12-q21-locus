@@ -43,7 +43,7 @@ EUR=fread('~/Desktop/OPEN/susie_mat/EURfolder/eur_chr17susie2ALL.txt')
 
 
 
-### this genrates the model / phenotype in the EUR 
+### this genrates the susie model / phenotype in the EUR 
 
 f1.b1=susie_rss(EUR$Z1, chr17.matrix, L=10)
 f1.b2=susie_rss(EUR$Z2, chr17.matrix, L=10)
@@ -58,6 +58,107 @@ f1.n2=susie_rss(EUR$Z10, chr17.matrix, L=10)
 f1.w1=susie_rss(EUR$Z11, chr17.matrix, L=10)
 f1.14=susie_rss(EUR$Z14, chr17.matrix, L=10)
 f1.15=susie_rss(EUR$Z15, chr17.matrix, L=10)
+
+
+## diagnostic check 
+#check consistency between the z scores and LD matrix.A larger 𝑠 means there is a strong inconsistency between z scores and LD matrix.
+#𝑠 is anumber between 0 and 1
+
+
+#s1.b1 = estimate_s_rss(EUR$Z1, chr17.matrix)#baso#
+#s1.b1
+#[1] 1.25438e-05
+#s1.b2 = estimate_s_rss(EUR$Z2, chr17.matrix)#baso%
+#s1.b2
+#[1] 9.212585e-06
+#s1.e1 = estimate_s_rss(EUR$Z3, chr17.matrix)#eos#
+#s1.e1
+#[1] 0.0001021947
+#s1.e2 = estimate_s_rss(EUR$Z4, chr17.matrix)#eos%
+#s1.e2
+#[1] 0.0001093257
+#s1.l1 = estimate_s_rss(EUR$Z5, chr17.matrix)#lym#
+#s1.l1
+#[1] 2.933732e-05
+#s1.l2 = estimate_s_rss(EUR$Z6, chr17.matrix)#lym%
+#s1.l2
+#[1] 3.802734e-05
+#s1.m1 = estimate_s_rss(EUR$Z7, chr17.matrix)#mon#
+#s1.m1
+#[1] 1.25438e-05
+#s1.m2 = estimate_s_rss(EUR$Z8, chr17.matrix)#mon%
+#s1.m2
+#[1] 7.471322e-05
+#s1.n1 = estimate_s_rss(EUR$Z9, chr17.matrix)#neu#
+#s1.n1
+#[1] 0.0001389687
+#s1.n2 = estimate_s_rss(EUR$Z10, chr17.matrix)#neu%
+#[1] 5.439469e-05
+#s1.w1 = estimate_s_rss(EUR$Z11, chr17.matrix)#wbc#
+#s1.w1
+#[1] 0.0001196477
+#s1.14 = estimate_s_rss(EUR$Z14, chr17.matrix)#<18yrs
+#s1.14
+#[1] 0.0001355609
+#s1.15 = estimate_s_rss(EUR$Z15, chr17.matrix) #<40yrs
+#s1.15
+#[1] 9.240556e-05
+##s1.16
+#s1.16 = estimate_s_rss(EUR$Z16, chr17.matrix) #asthma(age+sex)
+#[1] 3.575471e-05
+
+
+
+
+#The plot compares observed z score vs the expected value. The possible allele switched variants are labeled as red points 
+
+cond1.b1 = kriging_rss(EUR$Z1, chr17.matrix) 
+cond1.b1$plot#baso#
+
+cond1.b2 = kriging_rss(EUR$Z2, chr17.matrix)
+cond1.b2$plot#baso%
+
+cond1.e1 = kriging_rss(EUR$Z3, chr17.matrix)
+cond1.e1$plot#eos#
+
+cond1.e2 = kriging_rss(EUR$Z4, chr17.matrix)
+cond1.e2$plot#eos%
+
+cond1.l1 = kriging_rss(EUR$Z5, chr17.matrix)
+cond1.l1$plot#lym#
+
+cond1.l2 = kriging_rss(EUR$Z6, chr17.matrix)
+cond1.l2$plot#lym%
+
+cond1.m1 = kriging_rss(EUR$Z7, chr17.matrix)
+cond1.m1$plot#mon#
+
+cond1.m2 = kriging_rss(EUR$Z8, chr17.matrix)
+cond1.m2$plot#mon%
+
+cond1.n1 = kriging_rss(EUR$Z9, chr17.matrix)
+cond1.n1$plot#neu#
+
+cond1.n2 = kriging_rss(EUR$Z10, chr17.matrix)
+cond1.n2$plot#neu%
+
+cond1.w1 = kriging_rss(EUR$Z11, chr17.matrix)
+cond1.w1$plot#wbc#
+
+cond1.18 = kriging_rss(EUR$Z14, chr17.matrix)
+cond1.18$plot#<18yrs
+
+cond1.40 = kriging_rss(EUR$Z15, chr17.matrix)
+cond1.40$plot#<40yrs
+
+cond1.16 = kriging_rss(EUR$Z16, chr17.matrix)
+cond1.16$plot#asthma(age+sex)
+
+
+
+
+
+
 
 
 susie_plot(f1.b1, y="PIP", add_legend = TRUE, main="BASO#")
@@ -111,66 +212,14 @@ susie_plot(f1.15, y="PIP", add_legend = TRUE, main="<40yrs")
 cond1.40$plot
 s1.15
 
-### diagnostic check 
-
-#s1.b1 = estimate_s_rss(EUR$Z1, chr17.matrix)
-#s1.b2 = estimate_s_rss(EUR$Z2, chr17.matrix)
-#s1.e1 = estimate_s_rss(EUR$Z3, chr17.matrix)
-#s1.e2 = estimate_s_rss(EUR$Z4, chr17.matrix)
-#s1.l1 = estimate_s_rss(EUR$Z5, chr17.matrix)
-#s1.l2 = estimate_s_rss(EUR$Z6, chr17.matrix)
-#s1.m1 = estimate_s_rss(EUR$Z7, chr17.matrix)
-#s1.m2 = estimate_s_rss(EUR$Z8, chr17.matrix)
-#s1.n1 = estimate_s_rss(EUR$Z9, chr17.matrix)
-#s1.n2 = estimate_s_rss(EUR$Z10, chr17.matrix)
-#s1.w1 = estimate_s_rss(EUR$Z11, chr17.matrix)
-#s1.14 = estimate_s_rss(EUR$Z14, chr17.matrix)
-#s1.15 = estimate_s_rss(EUR$Z15, chr17.matrix)
+susie_plot(f1.16, y="PIP", add_legend = TRUE, main="asthma(age+sex)")
+cond1.16$plot
+s1.16
 
 
 
 
 
-#cond1.b1 = kriging_rss(EUR$Z1, chr17.matrix)
-cond1.b1$plot
-
-#cond1.b2 = kriging_rss(EUR$Z2, chr17.matrix)
-cond1.b2$plot
-
-
-#cond1.e1 = kriging_rss(EUR$Z3, chr17.matrix)
-cond1.e1$plot
-
-
-#cond1.e2 = kriging_rss(EUR$Z4, chr17.matrix)
-cond1.e2$plot
-
-#cond1.l1 = kriging_rss(EUR$Z5, chr17.matrix)
-cond1.l1$plot
-
-#cond1.l2 = kriging_rss(EUR$Z6, chr17.matrix)
-cond1.l2$plot
-
-#cond1.m1 = kriging_rss(EUR$Z7, chr17.matrix)
-cond1.m1$plot
-
-#cond1.m2 = kriging_rss(EUR$Z8, chr17.matrix)
-cond1.m2$plot
-
-#cond1.n1 = kriging_rss(EUR$Z9, chr17.matrix)
-cond1.n1$plot
-
-#cond1.n2 = kriging_rss(EUR$Z10, chr17.matrix)
-cond1.n2$plot
-
-#cond1.w1 = kriging_rss(EUR$Z11, chr17.matrix)
-cond1.w1$plot
-
-#cond1.18 = kriging_rss(EUR$Z14, chr17.matrix)
-cond1.18$plot
-
-#cond1.40 = kriging_rss(EUR$Z15, chr17.matrix)
-cond1.40$plot
 
 
 
