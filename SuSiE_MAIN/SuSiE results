@@ -328,12 +328,12 @@ cond1.sas.w1 = kriging_rss(SAS.snps$Z.11, SAS.ld)
 
 ###
 
-pdf("~/Desktop/SAS.NEU#.pdf", 6,4)
+pdf("~/Desktop/SAS_NEU#.pdf", 6,4)
 susie_plot(f1.sas.n1, y="PIP", add_legend = TRUE, main="SAS.NEU#")
 cond1.sas.n1$plot
 dev.off()
 
-pdf("~/Desktop/SAS.WBC#.pdf", 6,4)
+pdf("~/Desktop/SAS_WBC#.pdf", 6,4)
 susie_plot(f1.sas.w1, y="PIP", add_legend = TRUE, main="SAS.WBC#")
 cond1.sas.w1$plot
 dev.off()
@@ -341,6 +341,40 @@ dev.off()
 
 
 ###load AFR 
+
+afr.susie2=fread( "~/Desktop/OPEN/susie_mat/AFRfolder/afr.susie.95v2.txt")
+AFR.ld=fread("~/Desktop/OPEN/susie_mat/AFRfolder/AFR.ld")
+AFR.ld=as.matrix(AFR.ld)
+
+
+s.afr.n1=(afr.susie2$Z9.x, AFR.ld)
+s.afr.n1
+[1]
+cond1.afr.n1 = kriging_rss(afr.susie2$Z9.x, AFR.ld)
+afr.n1=susie_rss(afr.susie2$Z9.x, AFR.ld, L=10)
+
+
+s.afr.w1=(afr.susie2$Z11.x, AFR.ld)
+s.afr.w1
+[1]
+cond1.afr.w1 = kriging_rss(afr.susie2$Z11.x, AFR.ld)
+afr.w1=susie_rss(afr.susie2$Z11.x, AFR.ld, L=10)
+
+pdf("~/Desktop/AFR_NEU#.pdf", 6,4)
+susie_plot(afr.n1, y="PIP", add_legend = TRUE, main="AFR.NEU#")
+cond1.afr.n1$plot
+dev.off()
+
+
+pdf("~/Desktop/AFR_WBC#.pdf", 6,4)
+susie_plot(afr.w1, y="PIP", add_legend = TRUE, main="AFR.WBC#")
+cond1.afr.w1$plot
+dev.off()
+
+
+
+#####load BBJ
+
 
 
 
