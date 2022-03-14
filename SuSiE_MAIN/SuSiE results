@@ -217,16 +217,130 @@ cond1.16$plot
 s1.16
 
 
+#####plot 
+pdf("~/Desktop/BASO#.pdf", 6,4)
+susie_plot(f1.b1, y="PIP", add_legend = TRUE, main="BASO#")
+cond1.b1$plot
+dev.off()
+
+pdf("~/Desktop/BASO_perc.pdf", 6,4)
+susie_plot(f1.b2, y="PIP", add_legend = TRUE, main="BASO%")
+cond1.b2$plot
+dev.off()
+
+pdf("~/Desktop/EOS#.pdf", 6,4)
+susie_plot(f1.e1, y="PIP", add_legend = TRUE, main="EOS#")
+cond1.e1$plot
+dev.off()
+
+pdf("~/Desktop/EOS_perc.pdf", 6,4)
+susie_plot(f1.e2, y="PIP", add_legend = TRUE, main="EOS%")
+cond1.e2$plot
+dev.off()
+
+pdf("~/Desktop/LYM#.pdf", 6,4)
+susie_plot(f1.l1, y="PIP", add_legend = TRUE, main="LYM#")
+cond1.l1$plot
+dev.off()
+
+pdf("~/Desktop/LYM_perc.pdf", 6,4)
+susie_plot(f1.l2, y="PIP", add_legend = TRUE, main="LYM%")
+cond1.l2$plot
+dev.off()
+
+pdf("~/Desktop/MON#.pdf", 6,4)
+susie_plot(f1.m1, y="PIP", add_legend = TRUE, main="MON#")
+cond1.m1$plot
+dev.off()
+
+pdf("~/Desktop/MON_perc.pdf", 6,4)
+susie_plot(f1.m2, y="PIP", add_legend = TRUE, main="MON%")
+cond1.m2$plot
+dev.off()
+
+pdf("~/Desktop/NEU#.pdf", 6,4)
+susie_plot(f1.n1, y="PIP", add_legend = TRUE, main="NEU#")
+cond1.n1$plot
+dev.off()
+
+pdf("~/Desktop/NEU_perc.pdf", 6,4)
+susie_plot(f1.n2, y="PIP", add_legend = TRUE, main="NEU%")
+cond1.n2$plot
+dev.off()
+
+pdf("~/Desktop/WBC#.pdf", 6,4)
+susie_plot(f1.w1, y="PIP", add_legend = TRUE, main="WBC#")
+cond1.w1$plot
+dev.off()
+
+pdf("~/Desktop/<18yrs.pdf", 6,4)
+susie_plot(f1.14, y="PIP", add_legend = TRUE, main="<18yrs")
+cond1.18$plot
+dev.off()
+
+pdf("~/Desktop/<40yrs.pdf", 6,4)
+susie_plot(f1.15, y="PIP", add_legend = TRUE, main="<40yrs")
+cond1.40$plot
+dev.off()
+
+pdf("~/Desktop/asthma_age_sex.pdf", 6,4)
+susie_plot(f1.16, y="PIP", add_legend = TRUE, main="asthma(age+sex)")
+cond1.16$plot
+dev.off()
 
 
 
 
+######### load SAS matrix 
+
+SAS.ld=fread("/Users/chiefeghan/Desktop/OPEN/susie_mat/SASfolder/SAS.ld")
+SAS.ld=as.matrix(SAS.ld)
+
+#
+SAS.susie=fread("/Users/chiefeghan/Desktop/OPEN/susie_mat/SASfolder/SAS.Susie.summary.95.txt")
+SAS.snps=fread("~/Desktop/OPEN/susie_mat/SASfolder/SAS.z")
 
 
-######### load AFR matrix 
+##NEU
+SAS.snps$BETA.9=SAS.susie[match(SAS.snps$position, SAS.susie$position), "BETA9"]
+SAS.snps$SE.9=SAS.susie[match(SAS.snps$position, SAS.susie$position), "SE9"]
+SAS.snps$P.9=SAS.susie[match(SAS.snps$position, SAS.susie$position), "P9"]
+SAS.snps$Z.9=SAS.susie[match(SAS.snps$position, SAS.susie$position), "Z9.x"]
+
+s1.n1.sas=estimate_s_rss(SAS.snps$Z.9, SAS.ld)
+s1.n1.sas
+#[1] 1.452614e-06
+
+##WBC 
+SAS.snps$BETA.11=SAS.susie[match(SAS.snps$position, SAS.susie$position), "BETA11"]
+SAS.snps$SE.11=SAS.susie[match(SAS.snps$position, SAS.susie$position), "SE11"]
+SAS.snps$P.11=SAS.susie[match(SAS.snps$position, SAS.susie$position), "P11"]
+SAS.snps$Z.11=SAS.susie[match(SAS.snps$position, SAS.susie$position), "Z11.x"]
+
+s1.w1.sas=estimate_s_rss(SAS.snps$Z.11, SAS.ld)
+s1.w1.sas
+#[1] 1.592856e-06
+
+# diagnostic plot 
+cond1.sas.n1 = kriging_rss(SAS.snps$Z.9, SAS.ld)
+cond1.sas.w1 = kriging_rss(SAS.snps$Z.11, SAS.ld)
+
+
+###
+
+pdf("~/Desktop/SAS.NEU#.pdf", 6,4)
+susie_plot(f1.sas.n1, y="PIP", add_legend = TRUE, main="SAS.NEU#")
+cond1.sas.n1$plot
+dev.off()
+
+pdf("~/Desktop/SAS.WBC#.pdf", 6,4)
+susie_plot(f1.sas.w1, y="PIP", add_legend = TRUE, main="SAS.WBC#")
+cond1.sas.w1$plot
+dev.off()
 
 
 
+###load AFR 
 
 
 
