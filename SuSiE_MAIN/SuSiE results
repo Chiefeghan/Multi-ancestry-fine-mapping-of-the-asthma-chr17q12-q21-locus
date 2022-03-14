@@ -349,7 +349,7 @@ AFR.ld=as.matrix(AFR.ld)
 
 s.afr.n1=(afr.susie2$Z9.x, AFR.ld)
 s.afr.n1
-[1]
+[1] 1.814108e-06
 cond1.afr.n1 = kriging_rss(afr.susie2$Z9.x, AFR.ld)
 afr.n1=susie_rss(afr.susie2$Z9.x, AFR.ld, L=10)
 
