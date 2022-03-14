@@ -356,7 +356,7 @@ afr.n1=susie_rss(afr.susie2$Z9.x, AFR.ld, L=10)
 
 s.afr.w1=(afr.susie2$Z11.x, AFR.ld)
 s.afr.w1
-[1]
+[1] 1.693952e-06
 cond1.afr.w1 = kriging_rss(afr.susie2$Z11.x, AFR.ld)
 afr.w1=susie_rss(afr.susie2$Z11.x, AFR.ld, L=10)
 
