@@ -309,7 +309,7 @@ SAS.snps$Z.9=SAS.susie[match(SAS.snps$position, SAS.susie$position), "Z9.x"]
 
 s1.n1.sas=estimate_s_rss(SAS.snps$Z.9, SAS.ld)
 s1.n1.sas
-#[1] 1.452614e-06
+#[1] 1.434076e-06
 
 ##WBC 
 SAS.snps$BETA.11=SAS.susie[match(SAS.snps$position, SAS.susie$position), "BETA11"]
