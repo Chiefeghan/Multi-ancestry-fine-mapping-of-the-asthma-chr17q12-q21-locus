@@ -1,4 +1,18 @@
+#! /usr/bin/env Rscript
+---
+title: Figure1-Manuscript-Mediaiton analysis of the asthma17:37.2-38.8Mb locus.
+author: "Chief Ben-Eghan"
+date: "2/1/2022"
+output: html_document
+---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# R Markdown
+Load the required packages
+```{r}
 
 
 ###mediation2
@@ -11,6 +25,8 @@ chunk1.geno=chunk1.geno[,-c(1:6)]
 
 
 ##baseline 
+
+###all other strata 
 
 
 
@@ -53,4 +69,8 @@ gc()
 names(out) <- c("SNP", "intercept.m2", "coef.m2", "p.m2", "OR.m2", "M2.coef")
 rm(m)
 fwrite(out, "ast8.M2.exp", sep="\t", row.names=FALSE, quote=FALSE)
+
+
+
+```
 
