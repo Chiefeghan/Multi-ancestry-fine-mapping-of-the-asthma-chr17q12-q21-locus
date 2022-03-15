@@ -1,0 +1,56 @@
+
+
+
+###mediation2
+library(data.table)
+library(dplyr)
+pheno9=fread("pheno9")
+chunk1.geno=fread("chunk_1.genotypes.raw")
+chunk1.geno=chunk1.geno[,-c(1:6)]
+
+
+
+##baseline 
+
+
+
+#####model 3
+
+cov.EUR=fread("cov.EUR")
+pheno9$E1.pheno=cov.EUR[match(pheno9$FID, cov.EUR$FID),"eos_INV"]
+pheno9$E2.pheno=cov.EUR[match(pheno9$FID, cov.EUR$FID),"eosP_INV"]
+pheno9$N1.pheno=cov.EUR[match(pheno9$FID, cov.EUR$FID),"neutro_INV"]
+pheno9$N2.pheno=cov.EUR[match(pheno9$FID, cov.EUR$FID),"neutroP_INV"]
+pheno9$W1.pheno=cov.EUR[match(pheno9$FID, cov.EUR$FID),"wbc_INV"]
+pheno9$L1.pheno=cov.EUR[match(pheno9$FID, cov.EUR$FID),"lym_INV"]
+pheno9$L2.pheno=cov.EUR[match(pheno9$FID, cov.EUR$FID),"lymP_INV"]
+pheno9$B1.pheno=cov.EUR[match(pheno9$FID, cov.EUR$FID),"baso_INV"]
+pheno9$B2.pheno=cov.EUR[match(pheno9$FID, cov.EUR$FID),"basoP_INV"]
+pheno9$M1.pheno=cov.EUR[match(pheno9$FID, cov.EUR$FID),"mono_INV"]
+pheno9$M2.pheno=cov.EUR[match(pheno9$FID, cov.EUR$FID),"monoP_INV"]
+
+
+
+y=pheno9[,c(9,10,11,13,43,44,45,46,47,48,49,50,51,52,53)]
+y=as.data.frame(y)
+x=as.data.frame(chunk1.geno)
+
+start_time <- Sys.time()
+out <- data.frame(NULL)              # create object to keep results
+for (i in 1:length(x)) {
+  m <- summary(glm(y[,4] ~ x[,i]+y[,15], family="binomial"))    # run model
+  out[i, 1] <- names(x)[i]           # print variable name
+  out[i, 2] <- m$coefficients[1,1]   # intercept
+  out[i, 3] <- m$coefficients[2,1]  #coefficient
+  out[i, 4] <- m$coefficients[2,4] # p-value
+  out[i, 5] <- exp(m$coefficients[2,1]) # exponential-OR
+  out[i ,6] <- m$coefficients[3,1]  #phenotype.coefficient
+  
+}
+end_time <- Sys.time()
+print(end_time - start_time)
+gc()
+names(out) <- c("SNP", "intercept.m2", "coef.m2", "p.m2", "OR.m2", "M2.coef")
+rm(m)
+fwrite(out, "ast8.M2.exp", sep="\t", row.names=FALSE, quote=FALSE)
+
