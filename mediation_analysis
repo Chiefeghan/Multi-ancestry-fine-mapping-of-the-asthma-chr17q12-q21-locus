@@ -15,7 +15,7 @@ Load the required packages
 ```{r}
 
 
-###baseline 
+###baseline model 1
 
 library(data.table)
 library(dplyr)
@@ -23,12 +23,12 @@ library(tidyverse)
 
 
 pheno9=fread("pheno9")
-chunk1.geno=fread("ast4.genotypes.raw")
+chunk1.geno=fread("chunk_1.genotypes.raw")
 chunk1.geno=chunk1.geno[,-c(1:6)]
 
 y=pheno9[,c(9,10,11,13)]
 y=as.data.frame(y)
-y=as.data.frame(pheno9$Asthma4_bolt)
+y=as.data.frame(pheno9$Asthma6_bolt)
 x=as.data.frame(chunk1.geno)
 
 #9 is 18-40yrs, column 1
@@ -78,6 +78,8 @@ fwrite(out, "/Users/chiefeghan/Desktop/OPEN/TABLE/AST6_BASELINE/ast6.results.bas
 
 #t1.R
 ##BASO# or b1 in <18yrs
+
+##model 3
 
 pheno9=fread("pheno9")
 chunk1.geno=fread("chunk_1.genotypes.raw")
