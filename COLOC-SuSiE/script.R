@@ -44,6 +44,8 @@ chr17.matrix=as.matrix(chr17.matrix) ###convert to R matrix
 #WBC trait vs WBC trait Colocalization test
 ##create a COlOC-SuSiE file for each phenotype
 ### Load the snp.list (the same snp.list used to generate the LDmatrix)
+
+####BAS#
 EUR.snplist=fread('~/Desktop/chr17folder/eur_gwas/asthma6.z') ### snplist (3381snps) with rsid,chr, BP, a1,a2, maf 
 EUR.snplist=EUR.snplist[,c(1:6)]
 EUR.snplist$BETA=df.b1[match(EUR.snplist$rsid, df.b1$SNP), "BETA"]
@@ -168,10 +170,3 @@ all_susie.EUR %>%
 ```
 
 
-
-
-
-
-
-
-	 )
