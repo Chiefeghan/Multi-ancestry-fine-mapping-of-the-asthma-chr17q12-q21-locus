@@ -165,7 +165,7 @@ res
 
 
 ##check snpscores
-ptm1 = proc.time(); 
+ptm2 = proc.time(); 
 res2 <- hyprcoloc(betas, se, trait.names=traits, snp.id=rsid, trait.cor = trait.cor, 
 	binary.outcomes = binary.traits,
 	ld.matrix = chr17.matrix, 
