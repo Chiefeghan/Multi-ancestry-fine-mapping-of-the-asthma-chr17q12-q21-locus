@@ -82,7 +82,7 @@ nrow(betas)
 
 
 ##load the LD matrix obatined using LDstore for the 3381 snps
-chr17.matrix=fread("~/Desktop/chr17folder/eur_gwas/asthma6.ld") dim(3381 3381)
+chr17.matrix=fread("~/Desktop/chr17folder/eur_gwas/asthma6.ld") ##dim(3381 3381)
 chr17.matrix=as.matrix(chr17.matrix) ###convert to R matrix
 
 
