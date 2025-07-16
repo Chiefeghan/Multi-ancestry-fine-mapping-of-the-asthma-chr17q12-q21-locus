@@ -11,7 +11,7 @@ library(ggplot2)
 
 ### EUR COlOC-SuSiE
 
-#1Load full BOLT summary statistics file (SAIGE for asthma(sex+age))
+#1Load full BOLT summary statistics file (SAIGE for asthma adjusted for sex and age, asthma(all))
 #2Extract only snps that pass QC from full summary stats file
 #3Use only snps that pass QC to generate LD matrix using LDstore
 
