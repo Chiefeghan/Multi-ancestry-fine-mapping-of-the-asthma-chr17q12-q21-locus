@@ -13,7 +13,7 @@ library(hyprcoloc)
 
 
 
-#1Load full BOLT summary statistics file (SAIGE for asthma(sex+age))
+#1Load full BOLT summary statistics file (SAIGE for asthma adjusted for sex and age, asthma(all))
 #2Extract only snps that pass QC from full summary stats file
 #3Use only snps that pass QC to generate LD matrix using LDstore
 
@@ -81,7 +81,7 @@ nrow(se)
 nrow(betas)
 
 
-##load the LD matrix obatined using LDstore for the 3381 snps
+##load the LD matrix obtained using LDstore for the 3381 snps
 chr17.matrix=fread("~/Desktop/chr17folder/eur_gwas/asthma6.ld") ##dim(3381 3381)
 chr17.matrix=as.matrix(chr17.matrix) ###convert to R matrix
 
